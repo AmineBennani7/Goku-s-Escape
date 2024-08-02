@@ -43,12 +43,12 @@ SCREEN_HEIGHT = 600
 # The surface drawn on the screen is now an attribute of 'player'
 class Player(pygame.sprite.Sprite):
     def __init__(self):
-        super(Player, self).__init__()  
+        super(Player, self).__init__()
         self.surf = pygame.image.load("icons/goku.png").convert_alpha()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
-        self.rect = self.surf.get_rect()  #Rectangulo en (0,0)
+        self.rect = self.surf.get_rect()  # Rectángulo en (0,0)
+        self.mask = pygame.mask.from_surface(self.surf)  # Crear máscara de colisión
 
-    # Move the sprite based on user keypresses
     def update(self, pressed_keys):
         if pressed_keys[K_UP]:
             self.rect.move_ip(0, -5)
@@ -58,23 +58,15 @@ class Player(pygame.sprite.Sprite):
             self.rect.move_ip(-5, 0)
         if pressed_keys[K_RIGHT]:
             self.rect.move_ip(5, 0)
-        # Keep player on the screen
-        
-        if self.rect.left < 0:
-            self.rect.left = 0
-        if self.rect.right > SCREEN_WIDTH:
-            self.rect.right = SCREEN_WIDTH
-        if self.rect.top <= 0:
-            self.rect.top = 0
-        if self.rect.bottom >= SCREEN_HEIGHT:
-            self.rect.bottom = SCREEN_HEIGHT
+        # Mantener al jugador en la pantalla
+        self.rect.clamp_ip(pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # Define the enemy object by extending pygame.sprite.Sprite
 # The surface you draw on the screen is now an attribute of 'enemy'
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super(Enemy, self).__init__()
-        self.surf = pygame.image.load("icons/missile.png").convert()
+        self.surf = pygame.image.load("icons/missile.png").convert_alpha()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
         self.rect = self.surf.get_rect(
             center=(
@@ -82,10 +74,9 @@ class Enemy(pygame.sprite.Sprite):
                 random.randint(0, SCREEN_HEIGHT),
             )
         )
+        self.mask = pygame.mask.from_surface(self.surf)  # Crear máscara de colisión
         self.speed = random.randint(5, 20)
 
-    # Move the sprite based on speed
-    # Remove the sprite when it passes the left edge of the screen
     def update(self):
         self.rect.move_ip(-self.speed, 0)
         if self.rect.right < 0:
@@ -197,11 +188,10 @@ while running:
     for entity in all_sprites:
         screen.blit(entity.surf, entity.rect)
     # Check if any enemies have collided with the player
-    if pygame.sprite.spritecollideany(player, enemies):
-    # If so, then remove the player and stop the loop
+    if pygame.sprite.spritecollideany(player, enemies, pygame.sprite.collide_mask):
         player.kill()
         running = False
-        break
+
 
     # Update the display
     pygame.display.flip()
