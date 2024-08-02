@@ -6,7 +6,7 @@
 
 In **Goku's Escape**, Goku continuously flies across the screen, and the player must navigate him to avoid rockets that appear randomly from the right side of the screen. The player controls Goku using the arrow keys to move up, down, left, or right. The game ends when Goku collides with a rocket.
 
-![Game Demo](https://raw.githubusercontent.com/AmineBennani7/Goku-s-Escape/master/icons/record.gif)
+![Game Demo](https://github.com/AmineBennani7/Goku-s-Escape/raw/0414d91d8275cf9a27f1b1754ed7fba029966003/icons/record.gif)
 
 ## Installation
 
