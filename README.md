@@ -26,22 +26,24 @@ To run **Goku's Escape**, follow these steps:
 
 3. **Create and Activate a Virtual Environment**
 
-  It is recommended to use a virtual environment for Python projects. Create one and activate it:
-  ```bash
-  python -m venv venv
-  venv\Scripts\activate
+   It is recommended to use a virtual environment for Python projects. Create one and activate it:
+   ```bash
+   python -m venv venv
+   venv\Scripts\activate
+
 
 4. **Install Dependencies**
 
-Install the required Python packages:
-```bash
-pip install -r requirements.txt
+   Install the required Python packages:
+   ```bash
+   pip install -r requirements.txt
+
 
 5. **Run the Game**
 
-Execute the game script:
-```bash
-python game.py
+ Execute the game script:
+ ```bash
+ python game.py
 
 
 
